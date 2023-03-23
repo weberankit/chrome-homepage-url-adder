@@ -7,11 +7,12 @@ addUrlicon.addEventListener("click",popup)
 function popup(){
     const popupPage=document.querySelector(".popup")
    popupPage.innerHTML=`<div class="field">
+   <div class="inline-input">
     <p>
-     <input type="text" class="site-Name">Name    
+     <input type="text" class="site-Name" placeholder="Name"> 
     </p>
-   <p><input type="url" name="" id="" class="site-Url">URl</p>
-    
+   <p><input type="url" name="" id="" class="site-Url"placeholder="URL"></p>
+   </div>
 <button class="url-save-btn">save</button>
 </div>
 `
@@ -43,9 +44,12 @@ containerList.innerHTML=basket.map((item,indexId)=>{
  <div class="container-site-detail">
   <p class="vistsite"> ${item.siteName} </p>
   <p class="vistsite"> ${item.siteUrl} </p>
- <p class="edit" data-id=${indexId}>  Edit </p>
-<p class="remove"  data-id=${count}>  remove </p>
+
+ <p class="edit" data-id=${indexId}> <i class="fa-regular fa-pen-to-square"></i> </p>
+<p class="remove"  data-id=${count}>  <i class="fa-solid fa-trash"></i> </p>
+
 </div>
+
  `)
 }).join("")
   console.log(basket)
@@ -86,7 +90,7 @@ moreAction.forEach((item,index)=>{
  
    changeSitename.innerHTML=`
    
-   <div class="input-name-field">
+   <div class="input-name-field" id="afterEdit">
     <p> <input type="text" class="edit-input" ></p>
     <p> <input type="text" class="edit-input-url"></p>
     <button class="save-site-name">Save</button>
@@ -134,14 +138,23 @@ moreAction.forEach((item,index)=>{
 
 }
 
+document.getElementById('file').addEventListener('change', (e)=>{
+  const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
+      localStorage.setItem('wallpaper', base64String);
+      document.body.style.background = `url(data:image/png;base64,${base64String})`;
+    };
+    reader.readAsDataURL(file);
+})
 
+const bgmImage=document.querySelector(".img-container");
 
-document.getElementById("image-file").value
+const getImage= localStorage.getItem('wallpaper')
 
-let photo = document.getElementById("image-file").files[0]; 
-let formData = new FormData(); 
+ // document.body.style.background=` url(data:image/png;base64,${getImage})`
 
-formData.append("photo", photo); 
-fetch('/upload/image', {method: "POST", body: formData});
-console.log(formData)
+bgmImage.style.background=` url(data:image/png;base64,${getImage})`
+
 

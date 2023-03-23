@@ -1,0 +1,102 @@
+.img-container{
+    width:330px;
+    height:220px;
+    border:1px solid black;
+}
+
+body{
+    
+}
+
+body{
+    background: pink;
+    max-width:1600px;
+    width:800px;
+    margin:0 auto;
+background-image:url('./img/img.png');
+background-size:cover;
+
+}
+
+
+.addUrl{
+    font-size: 30px;
+ text-align: center;
+
+
+}
+.field{
+    display:grid;
+    place-items:center;
+   
+}
+.list {
+    display: flex;
+    flex-direction: row;
+    
+}
+.container-site-detail{
+border:1px solid white;
+
+width:10%;
+background:papayawhip;
+border-radius:40%;
+}
+.container-site-detail .vistsite{
+    text-align: center;
+    font-size:2vw;
+}
+.container-site-detail:nth-last-child(1),.container-site-detail:nth-last-child(2){
+   text-align:center;
+ 
+   
+}
+p.edit,p.remove{
+    margin:0;
+    text-align:center;
+    padding:0;
+    padding-top:.3em;
+}
+#afterEdit{
+    position:absolute;
+    top:50%;
+    left:0;
+    right:0;
+    bottom:0;
+    background:#000000bf;
+    width:800px;
+}
+
+.imgUser{
+    padding-top:4em;
+    display:grid;
+    place-items:center;
+
+
+}
+.img-container{
+    outline: none;
+    border: none;
+    border-radius: 20%;
+}
+#file{
+   
+    padding-top:1.5em;
+}
+
+.inline-input{
+    display:flex;
+    flex-direction:row;
+}
+input[type="file"]{
+    display:none;
+}
+label{
+    margin-top:.6em;
+    padding-top:.3em;
+    height:22px;
+    width:200px;
+    color:white;
+    background:black;
+    text-align:center;
+}
