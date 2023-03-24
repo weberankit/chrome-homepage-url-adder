@@ -21,6 +21,7 @@ const saveBtn=popupPage.querySelector(".url-save-btn")
 console.log(saveBtn)
 let count=1;
 saveBtn.addEventListener("click",()=>{
+ 
  // window.open('https://www.w3schools.com/jsref/met_html_click.asp')
  let siteName=popupPage.querySelector(".site-Name").value  
  const siteUrl=popupPage.querySelector(".site-Url").value
@@ -34,8 +35,14 @@ saveBtn.addEventListener("click",()=>{
     siteName,siteUrl,count
   }  
   )
+  saveBtn.style.display="block";
+  addUrlicon.style.display="block"
+
+
+
 }else{
-    saveBtn.style.display="none"
+    saveBtn.style.display="none";
+    addUrlicon.style.display="none"
 }
 
 containerList.innerHTML=basket.map((item,indexId)=>{
@@ -62,11 +69,16 @@ const removeItem=[...containerList.querySelectorAll(".remove")]
 removeItem.forEach((item)=>{
   item.addEventListener("click",()=>{
     console.log(item.dataset.id)
+    console.log(item.parentElement)
   item.parentElement.remove();
 const  removeId=item.dataset.id;
 console.log(removeId,"i am removeID",typeof removeId)
 basket = basket.filter((item)=>{
  console.log(typeof item.count)
+ 
+ 
+
+
  return item.count != removeId
 
 
@@ -129,14 +141,13 @@ moreAction.forEach((item,index)=>{
   })
 })
 
-
-
-
-
+ 
 
 })
 
 }
+
+
 
 document.getElementById('file').addEventListener('change', (e)=>{
   const file = e.target.files[0];
@@ -153,8 +164,8 @@ const bgmImage=document.querySelector(".img-container");
 
 const getImage= localStorage.getItem('wallpaper')
 
- // document.body.style.background=` url(data:image/png;base64,${getImage})`
+ document.body.style.background=` url(data:image/png;base64,${getImage})`
 
-bgmImage.style.background=` url(data:image/png;base64,${getImage})`
+ //bgmImage.style.background=` url(data:image/png;base64,${getImage})`
 
 
