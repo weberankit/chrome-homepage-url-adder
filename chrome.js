@@ -1,7 +1,7 @@
 const addUrlicon=document.querySelector(".addUrl")
 
 let basket=[];
-
+let dataId=["aa","bb","cc","dd","ee","ff","gg","hh","ii","jj"]
 addUrlicon.addEventListener("click",popup)
 
 function popup(){
@@ -20,19 +20,30 @@ function popup(){
 const saveBtn=popupPage.querySelector(".url-save-btn")
 console.log(saveBtn)
 let count=1;
+let a = -1;
+
 saveBtn.addEventListener("click",()=>{
  
  // window.open('https://www.w3schools.com/jsref/met_html_click.asp')
  let siteName=popupPage.querySelector(".site-Name").value  
- const siteUrl=popupPage.querySelector(".site-Url").value
+ let siteUrl=popupPage.querySelector(".site-Url").value
  const containerList=document.querySelector(".list")
    count++;
-   console.log(count)
+   a++;
+   if(a>=10){
+    a=0
+  }
+  
 
+
+   console.log(count)
+console.log(a)
  if(basket.length<10){
   basket.push(
   {
-    siteName,siteUrl,count
+    siteName,siteUrl,count,
+    IdofElement:dataId[a]
+
   }  
   )
   saveBtn.style.display="block";
@@ -41,19 +52,19 @@ saveBtn.addEventListener("click",()=>{
 
 
 }else{
-    saveBtn.style.display="none";
-    addUrlicon.style.display="none"
+     saveBtn.style.display="none";
+     addUrlicon.style.display="none"
 }
 
 containerList.innerHTML=basket.map((item,indexId)=>{
-
+console.log(dataId[a])
  return (`
  <div class="container-site-detail">
   <p class="vistsite"> ${item.siteName} </p>
   <p class="vistsite"> ${item.siteUrl} </p>
 
  <p class="edit" data-id=${indexId}> <i class="fa-regular fa-pen-to-square"></i> </p>
-<p class="remove"  data-id=${count}>  <i class="fa-solid fa-trash"></i> </p>
+<p class="remove"  data-id=${item.IdofElement}>  <i class="fa-solid fa-trash"></i> </p>
 
 </div>
 
@@ -72,14 +83,14 @@ removeItem.forEach((item)=>{
     console.log(item.parentElement)
   item.parentElement.remove();
 const  removeId=item.dataset.id;
-console.log(removeId,"i am removeID",typeof removeId)
+console.log(removeId,"i am removeID",typeof removeId,item.dataset.id)
 basket = basket.filter((item)=>{
  console.log(typeof item.count)
  
  
 
 
- return item.count != removeId
+ return item.IdofElement != removeId
 
 
 })
@@ -149,6 +160,41 @@ moreAction.forEach((item,index)=>{
 
 
 
+
+
+ //assign those id value which is avail and also  not
+ //present in basket
+ function iddata(){
+  dataId.map(item => {
+console.log(item)
+
+  basket.filter(elementId => {
+    console.log(elementId.IdofElement)
+    if(elementId.IdofElement == item){
+      return
+    }else{
+       console.log(item)
+       
+    }
+  })
+ })
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 document.getElementById('file').addEventListener('change', (e)=>{
   const file = e.target.files[0];
     const reader = new FileReader();
@@ -167,5 +213,33 @@ const getImage= localStorage.getItem('wallpaper')
  document.body.style.background=` url(data:image/png;base64,${getImage})`
 
  //bgmImage.style.background=` url(data:image/png;base64,${getImage})`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
