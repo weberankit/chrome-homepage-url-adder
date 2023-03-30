@@ -1,9 +1,16 @@
 const addUrlicon=document.querySelector(".addUrl")
 
-let basket=[];
+let basket= JSON.parse(localStorage.getItem("data")) ||  [] ;
+
+
+
 let dataId=["aa","bb","cc","dd","ee","ff","gg","hh","ii","jj"]
 addUrlicon.addEventListener("click",popup)
+addUrlicon.addEventListener("click",(e)=>{
+  console.log(e.currentTarget)
+  console.log(e.currentTarget.style.display="none")
 
+})
 function popup(){
     const popupPage=document.querySelector(".popup")
    popupPage.innerHTML=`<div class="field">
@@ -17,10 +24,10 @@ function popup(){
 </div>
 `
 
-const saveBtn=popupPage.querySelector(".url-save-btn")
+let saveBtn=popupPage.querySelector(".url-save-btn")
 console.log(saveBtn)
-let count=1;
-let a = -1;
+let count=1 
+let a = -1 ;
 
 saveBtn.addEventListener("click",()=>{
  
@@ -42,28 +49,29 @@ console.log(a)
   basket.push(
   {
     siteName,siteUrl,count,
-    IdofElement:dataId[a]
+    IdofElement:dataId[a]+count
 
   }  
   )
   saveBtn.style.display="block";
-  addUrlicon.style.display="block"
+ //// addUrlicon.style.display="block"
 
 
 
 }else{
      saveBtn.style.display="none";
-     addUrlicon.style.display="none"
+   ////  addUrlicon.style.display="none"
 }
 
 containerList.innerHTML=basket.map((item,indexId)=>{
 console.log(dataId[a])
  return (`
  <div class="container-site-detail">
+ <div class="field-modify">
   <p class="vistsite"> ${item.siteName} </p>
-  <p class="vistsite"> ${item.siteUrl} </p>
-
- <p class="edit" data-id=${indexId}> <i class="fa-regular fa-pen-to-square"></i> </p>
+  <p class="visturl"> ${item.siteUrl} </p>
+  </div>
+ <p class="edit" data-id=${item.IdofElement}> <i class="fa-regular fa-pen-to-square"></i> </p>
 <p class="remove"  data-id=${item.IdofElement}>  <i class="fa-solid fa-trash"></i> </p>
 
 </div>
@@ -95,7 +103,7 @@ basket = basket.filter((item)=>{
 
 })
 console.log(basket)
-
+checkItemnumber()
   })
 })
 
@@ -109,7 +117,25 @@ editName.addEventListener("click",()=>{
 moreAction.forEach((item,index)=>{
   item.addEventListener("click",()=>{
     console.log(item,"this is item",item.dataset.id,item.previousElementSibling)
-   const changeSitename=item.previousElementSibling
+   let cureentEditId=item.dataset.id
+
+   
+   basket = basket.filter((item)=>{
+    console.log(typeof item.count)
+    
+    
+   
+   
+    return item.IdofElement != cureentEditId
+   
+   
+   })
+   
+   
+   
+   
+   
+    const changeSitename=item.previousElementSibling
  
    changeSitename.innerHTML=`
    
@@ -122,6 +148,7 @@ moreAction.forEach((item,index)=>{
    `
   let updateSiteName=changeSitename.querySelector(".save-site-name")
   updateSiteName.addEventListener("click",()=>{
+    
     const inputValue=changeSitename.querySelector(".edit-input").value
     const inputUrlValue=changeSitename.querySelector(".edit-input-url").value
     changeSitename.innerHTML=`
@@ -129,7 +156,7 @@ moreAction.forEach((item,index)=>{
     <div class="input-name-field">
      <p> ${inputValue}</p>
      <p> ${inputUrlValue}</p>
-     <button data-unique="${count}" class="save-site-name">Save</button>
+    
     </div>
     
     `
@@ -152,33 +179,57 @@ moreAction.forEach((item,index)=>{
   })
 })
 
- 
+localStorage.setItem("data",JSON.stringify(basket));
 
 })
 
+
+
+
+
+
 }
 
+
+function checkItemnumber(){
+  let saveBtn=document.querySelector(".url-save-btn")
+  console.log(saveBtn)
+ if(basket.length<10){
+  saveBtn.style.display="block";
+ //// addUrlicon.style.display="block"
+ }else{
+  saveBtn.style.display="none";
+  //addUrlicon.style.display="none"
+ }
+}
 
 
 
 
  //assign those id value which is avail and also  not
- //present in basket
- function iddata(){
-  dataId.map(item => {
-console.log(item)
 
-  basket.filter(elementId => {
-    console.log(elementId.IdofElement)
-    if(elementId.IdofElement == item){
-      return
-    }else{
-       console.log(item)
-       
-    }
-  })
- })
-}
+
+////localStorage
+
+
+//localStorage.setItem("data",JSON.stringify(basket));
+
+//localStorage.setItem("id",JSON.stringify(a))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
