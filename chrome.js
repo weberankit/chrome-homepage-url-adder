@@ -26,8 +26,8 @@ function popup(){
 
 let saveBtn=popupPage.querySelector(".url-save-btn")
 console.log(saveBtn)
-let count=1 
-let a = -1 ;
+let count= JSON.parse(localStorage.getItem("countId")) || 1 
+let a =   -1 ;
 
 saveBtn.addEventListener("click",()=>{
  
@@ -37,22 +37,24 @@ saveBtn.addEventListener("click",()=>{
  const containerList=document.querySelector(".list")
    count++;
    a++;
+   /**/
    if(a>=10){
     a=0
   }
   
+localStorage.setItem("countId",JSON.stringify(count))
 
-
-   console.log(count)
+console.log(count)
 console.log(a)
  if(basket.length<10){
   basket.push(
   {
     siteName,siteUrl,count,
     IdofElement:dataId[a]+count
-
+   
   }  
   )
+  localStorage.setItem("data",JSON.stringify(basket));
   saveBtn.style.display="block";
  //// addUrlicon.style.display="block"
 
@@ -103,6 +105,7 @@ basket = basket.filter((item)=>{
 
 })
 console.log(basket)
+localStorage.setItem("data",JSON.stringify(basket));
 checkItemnumber()
   })
 })
@@ -131,7 +134,7 @@ moreAction.forEach((item,index)=>{
    
    })
    
-   
+  
    
    
    
@@ -142,13 +145,13 @@ moreAction.forEach((item,index)=>{
    <div class="input-name-field" id="afterEdit">
     <p> <input type="text" class="edit-input" ></p>
     <p> <input type="text" class="edit-input-url"></p>
-    <button class="save-site-name">Save</button>
+    <button class="save-site-name" data-id=${cureentEditId}>Save</button>
    </div>
    
    `
   let updateSiteName=changeSitename.querySelector(".save-site-name")
   updateSiteName.addEventListener("click",()=>{
-    
+    console.log(updateSiteName.dataset.id)
     const inputValue=changeSitename.querySelector(".edit-input").value
     const inputUrlValue=changeSitename.querySelector(".edit-input-url").value
     changeSitename.innerHTML=`
@@ -160,26 +163,29 @@ moreAction.forEach((item,index)=>{
     </div>
     
     `
-    const idtoAddinBasket=changeSitename.querySelector(".save-site-name").dataset.unique;
-    console.log(idtoAddinBasket)
+
+    console.log(updateSiteName.dataset.id)
+    //const idtoAddinBasket=changeSitename.querySelector(".save-site-name").dataset.id;
+    //console.log(idtoAddinBasket)
 
       basket.forEach((item)=>{
     
-      if(item.count == idtoAddinBasket){
+      if(item.IdofElement == updateSiteName.dataset.id){
        
         item.siteName=inputValue
+        item.siteUrl=inputUrlValue
       }
       })
    
+      localStorage.setItem("data",JSON.stringify(basket));
 
-
-
+      
   })
 
   })
 })
 
-localStorage.setItem("data",JSON.stringify(basket));
+//localStorage.setItem("data",JSON.stringify(basket));
 
 })
 
